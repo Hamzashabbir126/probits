@@ -1,0 +1,344 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Outfit:var(--body-regular-m-web-font-weight),var(--body-regular-web-font-weight),600,500,400,700|Roboto:500|Inter:500,400");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-900: rgba(1, 7, 7, 1);
+  --neutral-500: rgba(102, 112, 133, 1);
+  --neutral-600: rgba(71, 84, 103, 1);
+  --white: rgba(255, 255, 255, 1);
+  --dark: rgba(10, 20, 47, 1);
+  --body-regular-m-web-font-family: "Outfit", Helvetica;
+  --body-regular-m-web-font-weight: 500;
+  --body-regular-m-web-font-size: 16px;
+  --body-regular-m-web-letter-spacing: 0px;
+  --body-regular-m-web-line-height: 150%;
+  --body-regular-m-web-font-style: normal;
+  --body-regular-web-font-family: "Outfit", Helvetica;
+  --body-regular-web-font-weight: 400;
+  --body-regular-web-font-size: 16px;
+  --body-regular-web-letter-spacing: 0px;
+  --body-regular-web-line-height: 150%;
+  --body-regular-web-font-style: normal;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0px;
+  height: 100%;
+}
+
+/* Enhanced focus styles for better accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #4a90e2 !important;
+  outline-offset: 2px;
+}
+
+/* Remove default button focus outline for mouse users */
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Ensure interactive elements have proper cursor */
+button,
+a,
+[role="button"] {
+  cursor: pointer;
+}
+
+/* Improve readability for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Ensure proper contrast for disabled states */
+button:disabled,
+[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Improve touch targets for mobile */
+@media (max-width: 768px) {
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Responsive design improvements */
+@media (max-width: 1024px) {
+  .w-\[1440px\] {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .left-\[781px\], .left-\[701px\] {
+    left: 0;
+    transform: none;
+  }
+  
+  .w-\[488px\], .w-\[600px\] {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* Fix button alignment issues */
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure proper spacing and alignment */
+.App {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Fix navigation positioning */
+.fixed {
+  position: fixed;
+}
+
+/* Ensure content flows properly */
+.pt-20 {
+  padding-top: 5rem;
+}
+
+/* Full width layout */
+.w-full {
+  width: 100%;
+}
+
+/* Responsive container */
+.max-w-\[1440px\] {
+  max-width: 1440px;
+}
+
+/* Ensure proper viewport usage */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  min-width: 100vw;
+}
+
+/* Ensure App takes full width */
+.App {
+  min-height: 100vh;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Full width layout */
+.w-full {
+  width: 100%;
+  max-width: none;
+}
+
+/* Remove any default centering */
+.container, .mx-auto {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: none !important;
+}
+
+/* Ensure all content takes full width */
+* {
+  box-sizing: border-box;
+}
+
+/* Override any max-width constraints */
+.max-w-\[1440px\], .max-w-\[1200px\], .max-w-\[1024px\], .max-w-\[768px\] {
+  max-width: none !important;
+}
+
+/* Fix navigation transparency and positioning */
+.bg-transparent {
+  background-color: transparent;
+}
+
+/* Right-aligned navigation */
+.right-0 {
+  right: 0;
+}
+
+/* Ensure navigation text is visible on any background */
+.text-white {
+  color: white;
+}
+
+.hover\:text-\[\#d7ffb1\]:hover {
+  color: #d7ffb1;
+}
+
+/* Additional utility classes */
+.all-\[unset\] {
+  all: unset;
+}
+
+.box-border {
+  box-sizing: border-box;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.pl-6 {
+  padding-left: 1.5rem;
+}
+
+.pr-8 {
+  padding-right: 2rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.relative {
+  position: relative;
+}
+
+.flex-\[0_0_auto\] {
+  flex: 0 0 auto;
+}
+
+.rounded-\[44px\] {
+  border-radius: 44px;
+}
+
+.border-\[0\.8px\] {
+  border-width: 0.8px;
+}
+
+.border-solid {
+  border-style: solid;
+}
+
+.border-\[\#475467\] {
+  border-color: #475467;
+}
+
+.h-\[52px\] {
+  height: 52px;
+}
+
+.w-fit {
+  width: fit-content;
+}
+
+.mt-\[-10\.80px\] {
+  margin-top: -10.8px;
+}
+
+.mb-\[-9\.20px\] {
+  margin-bottom: -9.2px;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.text-primary-900 {
+  color: var(--primary-900);
+}
+
+.text-\[length:var\(--body-regular-m-web-font-size\)\] {
+  font-size: var(--body-regular-m-web-font-size);
+}
+
+.tracking-\[var\(--body-regular-m-web-letter-spacing\)\] {
+  letter-spacing: var(--body-regular-m-web-letter-spacing);
+}
+
+.leading-\[var\(--body-regular-m-web-line-height\)\] {
+  line-height: var(--body-regular-m-web-line-height);
+}
+
+.\[font-style:var\(--body-regular-m-web-font-style\)\] {
+  font-style: var(--body-regular-m-web-font-style);
+}
+
+.font-body-regular-m-web {
+  font-family: var(--body-regular-m-web-font-family);
+}
+
+.font-\[number:var\(--body-regular-m-web-font-weight\)\] {
+  font-weight: var(--body-regular-m-web-font-weight);
+}
+
+/* Button with arrow styles */
+.flex {
+  display: flex;
+}
+
+.w-\[52px\] {
+  width: 52px;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.-ml-5 {
+  margin-left: -1.25rem;
+}
+
+.bg-\[\#5da502\] {
+  background-color: #5da502;
+}
+
+.rounded-\[200px\] {
+  border-radius: 200px;
+}
+
+.w-\[30\.05px\] {
+  width: 30.05px;
+}
+
+.h-\[30\.05px\] {
+  height: 30.05px;
+}
