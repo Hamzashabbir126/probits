@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Home } from './components/Home';
-import { WaterWastewater } from './components/WaterWastewater';
-import { ContactUs } from './components/ContactUs';
-import { AboutUs } from './components/AboutUs';
-import { ConsultingPartners } from './components/ConsultingPartners';
-import { InUse } from './components/InUse';
-import { Blog } from './components/Blog';
-import { BlogDetail } from './components/BlogDetail';
 
-function App() {
-  const [currentPage, setCurrentPage] = useState('home'); 
+import { ArrowButton } from './components/ui/ArrowButton';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { 
+  HomePage, 
+  AboutUsPage, 
+  BlogPage, 
+  BlogDetailPage, 
+  ContactUsPage, 
+  ConsultingPartnersPage, 
+  WaterWastewaterPage, 
+  PlatformPage 
+} from './pages';
+
+// Navigation Component that uses React Router
+function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
   
   // Check if viewport width is less than 850px
   useEffect(() => {
@@ -32,20 +39,35 @@ function App() {
   // Expose a simple global navigation helper so nested components can request page changes
   if (typeof window !== 'undefined') {
     window.goToPage = (page) => {
-      setCurrentPage(page);
+      // Handle special cases for routing
+      if (page === 'home') {
+        navigate('/');
+      } else if (page === 'blogdetail') {
+        navigate('/blogdetail');
+      } else if (page === 'inuse') {
+        navigate('/platform');
+      } else {
+        navigate(`/${page}`);
+      }
       setMobileMenuOpen(false);
     };
   }
   
   // Function to handle navigation
-  const navigateTo = (page) => {
-    setCurrentPage(page);
+  const navigateTo = (path) => {
+    navigate(path);
     setMobileMenuOpen(false);
   };
   
   // Toggle mobile menu
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Helper function to check if current path matches
+  const isActive = (path) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname === path;
   };
 
   return (
@@ -55,7 +77,7 @@ function App() {
         <div className="flex items-center justify-between py-6 px-8">
           {/* Logo on the left */}
           <button
-            onClick={() => navigateTo('home')}
+            onClick={() => navigateTo('/')}
             className="focus:outline-none"
             style={{ padding: 0, background: 'none', border: 'none' }}
             aria-label="Go to Home"
@@ -70,63 +92,63 @@ function App() {
           {/* Navigation Buttons on the right */}
           <div className="flex items-center gap-6">
             <button
-              onClick={() => navigateTo('home')}
+              onClick={() => navigateTo('/')}
               className={`font-medium text-black text-sm md:text-base tracking-[0] leading-6 whitespace-nowrap transition-colors hover:text-[#5da502] ${
-                currentPage === 'home' ? 'text-[#5da502]' : ''
+                isActive('/') ? 'text-[#5da502]' : ''
               }`}
             >
               AIM
             </button>
 
             <button
-              onClick={() => navigateTo('water')}
+              onClick={() => navigateTo('/water')}
               className={`font-medium text-black text-sm md:text-base tracking-[0] leading-6 whitespace-nowrap transition-colors hover:text-[#5da502] ${
-                currentPage === 'water' ? 'text-[#5da502]' : ''
+                isActive('/water') ? 'text-[#5da502]' : ''
               }`}
             >
               INDUSTRIES
             </button>
 
             <button
-              onClick={() => navigateTo('consulting')}
+              onClick={() => navigateTo('/consulting')}
               className={`font-medium text-black text-sm md:text-base tracking-[0] leading-6 whitespace-nowrap transition-colors hover:text-[#5da502] ${
-                currentPage === 'consulting' ? 'text-[#5da502]' : ''
+                isActive('/consulting') ? 'text-[#5da502]' : ''
               }`}
             >
               CONSULTING PARTNERS
             </button>
 
             <button
-              onClick={() => navigateTo('inuse')}
+              onClick={() => navigateTo('/platform')}
               className={`font-medium text-black text-sm md:text-base tracking-[0] leading-6 whitespace-nowrap transition-colors hover:text-[#5da502] ${
-                currentPage === 'inuse' ? 'text-[#5da502]' : ''
+                isActive('/platform') ? 'text-[#5da502]' : ''
               }`}
             >
               RESOURCES
             </button>
 
             <button
-              onClick={() => navigateTo('blog')}
+              onClick={() => navigateTo('/blog')}
               className={`font-medium text-black text-sm md:text-base tracking-[0] leading-6 whitespace-nowrap transition-colors hover:text-[#5da502] ${
-                currentPage === 'blog' ? 'text-[#5da502]' : ''
+                isActive('/blog') ? 'text-[#5da502]' : ''
               }`}
             >
               BLOG
             </button>
 
             <button
-              onClick={() => navigateTo('about')}
+              onClick={() => navigateTo('/about')}
               className={`font-medium text-black text-sm md:text-base tracking-[0] leading-6 whitespace-nowrap transition-colors hover:text-[#5da502] ${
-                currentPage === 'about' ? 'text-[#5da502]' : ''
+                isActive('/about') ? 'text-[#5da502]' : ''
               }`}
             >
               ABOUT US
             </button>
 
             <button
-              onClick={() => navigateTo('contact')}
+              onClick={() => navigateTo('/contact')}
               className={`font-medium text-black text-sm md:text-base tracking-[0] leading-6 whitespace-nowrap transition-colors hover:text-[#5da502] ${
-                currentPage === 'contact' ? 'text-[#5da502]' : ''
+                isActive('/contact') ? 'text-[#5da502]' : ''
               }`}
             >
               CONTACT
@@ -173,56 +195,56 @@ function App() {
           <ul className="mt-8 space-y-4">
             <li>
               <button 
-                onClick={() => navigateTo('home')}
-                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${currentPage === 'home' ? 'text-[#5da502]' : ''}`}
+                onClick={() => navigateTo('/')}
+                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${isActive('/') ? 'text-[#5da502]' : ''}`}
               >
                 AIM
               </button>
             </li>
             <li>
               <button 
-                onClick={() => navigateTo('water')}
-                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${currentPage === 'water' ? 'text-[#5da502]' : ''}`}
+                onClick={() => navigateTo('/water')}
+                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${isActive('/water') ? 'text-[#5da502]' : ''}`}
               >
                 INDUSTRIES
               </button>
             </li>
             <li>
               <button 
-                onClick={() => navigateTo('consulting')}
-                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${currentPage === 'consulting' ? 'text-[#5da502]' : ''}`}
+                onClick={() => navigateTo('/consulting')}
+                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${isActive('/consulting') ? 'text-[#5da502]' : ''}`}
               >
                 CONSULTING PARTNERS
               </button>
             </li>
             <li>
               <button 
-                onClick={() => navigateTo('inuse')}
-                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${currentPage === 'inuse' ? 'text-[#5da502]' : ''}`}
+                onClick={() => navigateTo('/platform')}
+                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${isActive('/platform') ? 'text-[#5da502]' : ''}`}
               >
                 RESOURCES
               </button>
             </li>
             <li>
               <button 
-                onClick={() => navigateTo('blog')}
-                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${currentPage === 'blog' ? 'text-[#5da502]' : ''}`}
+                onClick={() => navigateTo('/blog')}
+                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${isActive('/blog') ? 'text-[#5da502]' : ''}`}
               >
                 BLOG
               </button>
             </li>
             <li>
               <button 
-                onClick={() => navigateTo('about')}
-                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${currentPage === 'about' ? 'text-[#5da502]' : ''}`}
+                onClick={() => navigateTo('/about')}
+                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${isActive('/about') ? 'text-[#5da502]' : ''}`}
               >
                 ABOUT US
               </button>
             </li>
             <li>
               <button 
-                onClick={() => navigateTo('contact')}
-                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${currentPage === 'contact' ? 'text-[#5da502]' : ''}`}
+                onClick={() => navigateTo('/contact')}
+                className={`block py-2 text-lg text-gray-800 hover:text-[#5da502] ${isActive('/contact') ? 'text-[#5da502]' : ''}`}
               >
                 CONTACT
               </button>
@@ -233,14 +255,17 @@ function App() {
 
       {/* Page Content */}
       <div className="w-full max-w-none flex-1">
-        {currentPage === 'home' && <Home />}
-        {currentPage === 'water' && <WaterWastewater />}
-        {currentPage === 'contact' && <ContactUs />}
-        {currentPage === 'about' && <AboutUs />}
-        {currentPage === 'consulting' && <ConsultingPartners />}
-        {currentPage === 'inuse' && <InUse />}
-        {currentPage === 'blog' && <Blog />}
-        {currentPage === 'blogdetail' && <BlogDetail />}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/water" element={<WaterWastewaterPage />} />
+          <Route path="/contact" element={<ContactUsPage />} />
+          <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/consulting" element={<ConsultingPartnersPage />} />
+          <Route path="/platform" element={<PlatformPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blogdetail" element={<BlogDetailPage />} />
+          <Route path="/blog/:id" element={<BlogDetailPage />} />
+        </Routes>
       </div>
 
       {/* Global Footer (flowing, responsive) */}
@@ -262,29 +287,67 @@ function App() {
 
             <div>
               <div className="[font-family:'Inter',Helvetica] font-normal text-dark text-lg leading-[normal]">PROBIT</div>
-              <div className="mt-3 opacity-80 [font-family:'Inter',Helvetica] font-normal text-dark text-sm leading-[30px]">
-                ABOUT
-                <br />
-                CSR
-                <br />
-                CAREERS
-                <br />
-                PRIVACY POLICY
+              <div className="mt-3 opacity-80 [font-family:'Inter',Helvetica] font-normal text-dark text-sm leading-[30px] space-y-2">
+                <button 
+                  onClick={() => navigateTo('/about')}
+                  className="block hover:text-[#5da502] transition-colors cursor-pointer text-left"
+                >
+                  ABOUT
+                </button>
+                <button 
+                  onClick={() => navigateTo('/csr')}
+                  className="block hover:text-[#5da502] transition-colors cursor-pointer text-left"
+                >
+                  CSR
+                </button>
+                <button 
+                  onClick={() => navigateTo('/careers')}
+                  className="block hover:text-[#5da502] transition-colors cursor-pointer text-left"
+                >
+                  CAREERS
+                </button>
+                <button 
+                  onClick={() => navigateTo('/privacy')}
+                  className="block hover:text-[#5da502] transition-colors cursor-pointer text-left"
+                >
+                  PRIVACY POLICY
+                </button>
               </div>
             </div>
 
             <div>
               <div className="[font-family:'Inter',Helvetica] font-normal text-dark text-lg leading-[normal]">AIM</div>
-              <div className="mt-3 opacity-80 [font-family:'Inter',Helvetica] font-normal text-dark text-sm leading-[30px]">
-                AIM
-                <br />
-                KEY VERTICALS
-                <br />
-                PARTNER
-                <br />
-                CONSULTANTS
-                <br />
-                SUPPORT SERVICES RESOURCES
+              <div className="mt-3 opacity-80 [font-family:'Inter',Helvetica] font-normal text-dark text-sm leading-[30px] space-y-2">
+                <button 
+                  onClick={() => navigateTo('/')}
+                  className="block hover:text-[#5da502] transition-colors cursor-pointer text-left"
+                >
+                  AIM
+                </button>
+                <button 
+                  onClick={() => navigateTo('/water')}
+                  className="block hover:text-[#5da502] transition-colors cursor-pointer text-left"
+                >
+                  KEY VERTICALS
+                </button>
+                <button 
+                  onClick={() => navigateTo('/consulting')}
+                  className="block hover:text-[#5da502] transition-colors cursor-pointer text-left"
+                >
+                  PARTNER
+                </button>
+                <button 
+                  onClick={() => navigateTo('/consulting')}
+                  className="block hover:text-[#5da502] transition-colors cursor-pointer text-left"
+                >
+                  CONSULTANTS
+                </button>
+                <button 
+                  onClick={() => navigateTo('/platform')}
+                  className="block hover:text-[#5da502] transition-colors cursor-pointer text-left"
+                >
+                  SUPPORT SERVICES RESOURCES
+                </button>
               </div>
             </div>
           </div>
@@ -294,18 +357,21 @@ function App() {
               <div className="[font-family:'Inter',Helvetica] font-medium text-dark text-lg leading-[normal]">Social</div>
               <img className="mt-3 w-[193px] h-5" alt="Group" src="https://c.animaapp.com/mez1gtpiAT6jQW/img/group-52.png" />
             </div>
-            <div className="flex items-center">
-              <div className="inline-flex h-[52px] items-center gap-2 pl-6 pr-8 py-6 rounded-[44px] border-[0.8px] border-solid border-[#475467]">
-                <div className="font-body-regular-m-web text-primary-900">View Details</div>
-              </div>
-              <div className="flex w-[52px] h-[52px] items-center justify-center -ml-5 bg-[#5da502] rounded-full">
-                <img className="w-[30.05px] h-[30.05px]" alt="Vuesax linear arrow" src="https://c.animaapp.com/mez1gtpiAT6jQW/img/vuesax-linear-arrow-right.svg" />
-              </div>
-            </div>
+           <ArrowButton onClick={() => console.log("View Details Clicked")}>View Details</ArrowButton>
+
           </div>
         </div>
       </footer>
     </div>
+  );
+}
+
+// Main App component with Router
+function App() {
+  return (
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <Navigation />
+    </Router>
   );
 }
 
